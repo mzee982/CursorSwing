@@ -1,32 +1,56 @@
 package mousecursorswing;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.util.Date;
 import java.util.Random;
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class MouseCursorSwingTask extends Task<Void> {
     private final MouseCursorSwingProperties properties;
-    private Robot robot;
     private Random random;
+    private Stage stage;
+    private Circle circle;
+    private AnimationLock animationLock;
     
-    public MouseCursorSwingTask(MouseCursorSwingProperties properties) {
-        this.properties = properties;
+    private class AnimationLock {
+        public boolean animateX;
+        public boolean animateY;
         
-        init();
+        public AnimationLock() {
+            animateX = false;
+            animateY = false;
+        }
     }
     
-    private void init() {
+    public MouseCursorSwingTask(MouseCursorSwingProperties properties, Stage ownerStage) {
         
-        try {
-            robot = new Robot();
-        }
-        catch (AWTException e) {
-            e.printStackTrace();
-        }
+        //
+        this.properties = properties;
+        animationLock = new AnimationLock();
         
+        //
         random = new Random((new Date()).getTime());
+        
+        //
+        createStage(ownerStage);
         
     }
     
@@ -36,67 +60,173 @@ public class MouseCursorSwingTask extends Task<Void> {
         
         return null;
     }
+
+    @Override
+    protected void succeeded() {
+        super.succeeded();
+        destroyStage();
+    }
+
+    @Override
+    protected void cancelled() {
+        super.cancelled();
+        destroyStage();
+    }
+
+    @Override
+    protected void failed() {
+        super.failed();
+        destroyStage();
+    }
+    
+    private void createStage(Stage ownerStage) {
+        Group root = new Group();
+        RadialGradient gradient = new RadialGradient(0, 0, 0.5d, 0.5d, 0.5d, true, CycleMethod.NO_CYCLE, 
+                                    new Stop(0, Color.TRANSPARENT), 
+                                    new Stop(0.05, Color.TRANSPARENT), 
+                                    new Stop(0.06, Color.rgb(0,0,0,0.5)), 
+                                    new Stop(1, Color.TRANSPARENT));
+        circle = new Circle(0, 0, 200, gradient);
+        root.getChildren().add(circle);
+        
+        Scene scene = new Scene(root, Color.TRANSPARENT);
+        
+        stage = new Stage(StageStyle.TRANSPARENT);
+        stage.setScene(scene);
+        stage.setTitle(Constants.APP_TITLE);
+        stage.setResizable(false);
+        stage.setFullScreen(true);
+        stage.initModality(Modality.NONE); //Modality.WINDOW_MODAL
+        stage.initOwner(ownerStage);
+        
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    cancel();
+                }
+            }
+        });
+        stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obsValue, Boolean oldValue, Boolean newValue) {
+                if (!newValue) cancel();
+            }
+        });
+        
+        ((Stage) stage.getOwner()).setIconified(true);
+        stage.show();
+    }
+    
+    private void destroyStage() {
+        if (stage != null) {
+            ((Stage) stage.getOwner()).setIconified(false);
+            stage.hide();
+        }
+    }
     
     private void doSwing() {
             
-            // Initialize pass control variables
-            int xi = 0;
-            int yi = 0;
-            int xdirection = 1;
-            int ydirection = 1;
-            
-            // Initial pass parameters
-            int xa = properties.getMinX();
-            int xb = properties.getMaxX();
-            int ya = properties.getMinY();
-            int yb = properties.getMaxY();
-            long xn = Math.round((xb - xa) / properties.getMaxSpeedX());
-            long yn = Math.round((yb - ya) / properties.getMaxSpeedY());
-            
-            while (!isCancelled()) {
+        // Initialize pass control variables
+        int xdirection = 1;
+        int ydirection = 1;
 
-            	// Move mouse cursor
-            	long x = interpolate(xi, xn, xa, xb);
-            	long y = interpolate(yi, yn, ya, yb);
-            	robot.mouseMove((int) x, (int) y);
-            	
-            	// X
-            	if (xi < xn){
-                    xi++;
-            	}
-            	else if (xn > 0) {
-                    xi = 0;
+        // Initial pass parameters
+        int xa = properties.getMinX();
+        int xb = properties.getMaxX();
+        int ya = properties.getMinY();
+        int yb = properties.getMaxY();
+        long xn = Math.round((xb - xa) / properties.getMaxSpeedX());
+        long yn = Math.round((yb - ya) / properties.getMaxSpeedY());
+        
+        // Animation
+        TranslateTransition transitionX = null;
+        TranslateTransition transitionY = null;
+
+        while (!isCancelled()) {
+
+            // Animate
+            synchronized (animationLock) {
+                
+                // Animate X
+                if (!animationLock.animateX) {
+                    transitionX = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * xn), circle);
+                    transitionX.setFromX(xa);
+                    transitionX.setToX(xb);
+                    transitionX.setCycleCount(1);
+                    transitionX.setAutoReverse(false);
+                    transitionX.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent t) {
+                            synchronized (animationLock) {
+                                animationLock.animateX = false;
+                                animationLock.notify();
+                            }
+                        }
+                    });
+                    animationLock.animateX = true;
+                    transitionX.play();
+                }
+                
+                // Animate Y
+                if (!animationLock.animateY) {
+                    transitionY = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * yn), circle);
+                    transitionY.setFromY(ya);
+                    transitionY.setToY(yb);
+                    transitionY.setCycleCount(1);
+                    transitionY.setAutoReverse(false);
+                    transitionY.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent t) {
+                            synchronized (animationLock) {
+                                animationLock.animateY = false;
+                                animationLock.notify();
+                            }
+                        }
+                    });
+                    animationLock.animateY = true;
+                    transitionY.play();
+                }
+                
+            }
+            
+            synchronized (animationLock) {
+                while (animationLock.animateX && animationLock.animateY) {
+                    try {
+                        animationLock.wait();
+                    }
+                    catch (InterruptedException e) {
+                        if (isCancelled()) break;
+                    }
+                }
+                    
+                // X
+                if (!animationLock.animateX) {
                     xdirection *= -1;
                     xa = xb;
                     int xr = (int) Math.round((double) (properties.getMaxX() - properties.getMinX()) / properties.getDiversityX() * random.nextDouble());
                     xb = (xdirection == 1) ? properties.getMaxX() - xr : properties.getMinX() + xr;
                     double xspeed = properties.getMinSpeedX() + (properties.getMaxSpeedX() - properties.getMinSpeedX()) * random.nextDouble();
                     xn = Math.round(Math.abs(xb - xa) / xspeed);
-            	}
-            	
-            	// Y
-            	if (yi < yn){
-                    yi++;
-            	}
-            	else if (yn > 0) {
-                    yi = 0;
+                }
+
+                // Y
+                if (!animationLock.animateY) {
                     ydirection *= -1;
                     ya = yb;
                     int yr = (int) Math.round((double) (properties.getMaxY() - properties.getMinY()) / properties.getDiversityY() * random.nextDouble());
                     yb = (ydirection == 1) ? properties.getMaxY() - yr : properties.getMinY() + yr;
                     double yspeed = properties.getMinSpeedY() + (properties.getMaxSpeedY() - properties.getMinSpeedY()) * random.nextDouble();
                     yn = Math.round(Math.abs(yb - ya) / yspeed);
-            	}
-            	
-            	// Sleep
-            	try {
-                    Thread.sleep(properties.getRefreshInterval());
                 }
-                catch (InterruptedException e) {
-                    if (isCancelled()) break;
-                }
-                
+                    
             }
+            
+        }
+        
+        //
+        if ((transitionX != null) && (transitionX.getStatus() != Animation.Status.STOPPED)) transitionX.stop();
+        if ((transitionY != null) && (transitionY.getStatus() != Animation.Status.STOPPED)) transitionY.stop();
         
     }
     

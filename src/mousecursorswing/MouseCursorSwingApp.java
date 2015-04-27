@@ -3,7 +3,6 @@ package mousecursorswing;
 import javafx.application.Application;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +10,7 @@ import javafx.stage.Stage;
 
 public class MouseCursorSwingApp extends Application {
 
+    private Stage topLevelStage;
     private FXMLMainController controller;
     private MouseCursorSwingTask mouseCursorSwingTask;
     private MouseCursorSwingProperties mouseCursorSwingProperties;
@@ -27,6 +27,8 @@ public class MouseCursorSwingApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        topLevelStage = stage;
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMain.fxml"));
         Parent root = (Parent) loader.load();
         
@@ -35,10 +37,10 @@ public class MouseCursorSwingApp extends Application {
         
         Scene scene = new Scene(root);
         
-        stage.setTitle(Constants.APP_TITLE);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        topLevelStage.setTitle(Constants.APP_TITLE);
+        topLevelStage.setResizable(false);
+        topLevelStage.setScene(scene);
+        topLevelStage.show();
     }
 
     @Override
@@ -58,10 +60,10 @@ public class MouseCursorSwingApp extends Application {
         
         //
         cancelMouseCursorSwingTask();
-        
+
         //
         if (mouseCursorSwingTask == null) {
-            mouseCursorSwingTask = new MouseCursorSwingTask(mouseCursorSwingProperties);
+            mouseCursorSwingTask = new MouseCursorSwingTask(mouseCursorSwingProperties, topLevelStage);
             
             mouseCursorSwingTask.addEventHandler(WorkerStateEvent.ANY, new EventHandler<WorkerStateEvent>() {
                 @Override
@@ -77,11 +79,15 @@ public class MouseCursorSwingApp extends Application {
     }
     
     public void cancelMouseCursorSwingTask() {
+        
+        //
         if ((mouseCursorSwingTask != null) && !mouseCursorSwingTask.isDone()) {
             mouseCursorSwingTask.cancel();
         }
         
+        //
         mouseCursorSwingTask = null;
+        
     }
     
     private void handleMouseCursorSwingTaskEvents(WorkerStateEvent event) {
@@ -90,7 +96,7 @@ public class MouseCursorSwingApp extends Application {
             || (event.getEventType() == WorkerStateEvent.WORKER_STATE_CANCELLED)) {
             
             controller.stopMouseCursorSwingTask();
-        
+            
         }
     }
 
