@@ -127,11 +127,7 @@ public class MouseCursorSwingTask extends Task<Void> {
     
     private void doSwing() {
             
-        // Initialize pass control variables
-        int xdirection = 1;
-        int ydirection = 1;
-
-        // Initial pass parameters
+        // Initialize pass parameters
         int xa = properties.getMinX();
         int xb = properties.getMaxX();
         int ya = properties.getMinY();
@@ -139,17 +135,27 @@ public class MouseCursorSwingTask extends Task<Void> {
         long xn = Math.round((xb - xa) / properties.getMaxSpeedX());
         long yn = Math.round((yb - ya) / properties.getMaxSpeedY());
         
+        // Initialize pass control variables
+        int xdirection = 1;
+        int ydirection = 1;
+        boolean needToAnimateX = (xa != xb);
+        boolean needToAnimateY = (ya != yb);
+
+        // Initialize position
+        circle.setTranslateX(xa);
+        circle.setTranslateY(ya);
+        
         // Animation
         TranslateTransition transitionX = null;
         TranslateTransition transitionY = null;
 
-        while (!isCancelled()) {
+        while (!isCancelled() && (needToAnimateX || needToAnimateY)) {
 
             // Animate
             synchronized (animationLock) {
                 
                 // Animate X
-                if (!animationLock.animateX) {
+                if (!animationLock.animateX && needToAnimateX) {
                     transitionX = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * xn), circle);
                     transitionX.setFromX(xa);
                     transitionX.setToX(xb);
@@ -169,7 +175,7 @@ public class MouseCursorSwingTask extends Task<Void> {
                 }
                 
                 // Animate Y
-                if (!animationLock.animateY) {
+                if (!animationLock.animateY && needToAnimateY) {
                     transitionY = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * yn), circle);
                     transitionY.setFromY(ya);
                     transitionY.setToY(yb);
@@ -191,7 +197,7 @@ public class MouseCursorSwingTask extends Task<Void> {
             }
             
             synchronized (animationLock) {
-                while (animationLock.animateX && animationLock.animateY) {
+                while ((animationLock.animateX || !needToAnimateX) && (animationLock.animateY || !needToAnimateY)) {
                     try {
                         animationLock.wait();
                     }
@@ -201,7 +207,7 @@ public class MouseCursorSwingTask extends Task<Void> {
                 }
                     
                 // X
-                if (!animationLock.animateX) {
+                if (!animationLock.animateX && needToAnimateX) {
                     xdirection *= -1;
                     xa = xb;
                     int xr = (int) Math.round((double) (properties.getMaxX() - properties.getMinX()) / properties.getDiversityX() * random.nextDouble());
@@ -211,7 +217,7 @@ public class MouseCursorSwingTask extends Task<Void> {
                 }
 
                 // Y
-                if (!animationLock.animateY) {
+                if (!animationLock.animateY && needToAnimateY) {
                     ydirection *= -1;
                     ya = yb;
                     int yr = (int) Math.round((double) (properties.getMaxY() - properties.getMinY()) / properties.getDiversityY() * random.nextDouble());

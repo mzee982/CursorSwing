@@ -1,13 +1,13 @@
 package mousecursorswing;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 
 public class MouseCursorSwingProperties extends Properties {
     
@@ -32,10 +32,9 @@ public class MouseCursorSwingProperties extends Properties {
     public MouseCursorSwingProperties() {
 
         // Screen dimensions
-        //TODO Dimensions from javafx.stage.Screen
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenWidth = screenSize.width;
-        screenHeight = screenSize.height;
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();
+        screenWidth = (int) Math.round(primaryScreenBounds.getWidth());
+        screenHeight = (int) Math.round(primaryScreenBounds.getHeight());
         
         //
         defaults = getDefaults();
@@ -96,6 +95,10 @@ public class MouseCursorSwingProperties extends Properties {
                 }
             }
         }
+        
+        //
+        validation(properties);
+        
     }
     
     public void store() {
@@ -126,6 +129,14 @@ public class MouseCursorSwingProperties extends Properties {
                 }
             }
         }
+    }
+    
+    private void validation(Properties properties) {
+        int maxX = Integer.parseInt(properties.getProperty(KEY_MAX_X, String.valueOf(screenWidth)));
+        int maxY = Integer.parseInt(properties.getProperty(KEY_MAX_Y, String.valueOf(screenHeight)));
+        
+        if (maxX > screenWidth) properties.setProperty(KEY_MAX_X, String.valueOf(screenWidth));
+        if (maxY > screenHeight) properties.setProperty(KEY_MAX_Y, String.valueOf(screenHeight));
     }
     
     public void resetToDefaults() {

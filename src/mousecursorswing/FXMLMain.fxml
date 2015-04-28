@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,10 +8,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mousecursorswing.FXMLMainController">
-    <children>
-      <VBox fx:id="vBoxControls" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
+<VBox fx:id="vBoxControls" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mousecursorswing.FXMLMainController">
+   <children>
+      <TitledPane animated="false" collapsible="false" focusTraversable="false" text="Refresh">
+         <content>
             <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
@@ -26,129 +27,229 @@
                   <Label fx:id="labelRefreshIntervalValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                </children>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="10.0">
+         </content>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" focusTraversable="false" text="Speed">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <content>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="15.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label text="Min Speed X" />
-                  <Slider fx:id="sliderMinSpeedX" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="labelMinSpeedXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Max Speed X" GridPane.columnIndex="3" />
-                  <Label fx:id="labelMaxSpeedXValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-                  <Slider fx:id="sliderMaxSpeedX" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <GridPane GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Min Speed X" />
+                        <Slider fx:id="sliderMinSpeedX" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelMinSpeedXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label layoutX="10.0" layoutY="10.0" text="Max Speed X" GridPane.columnIndex="3" />
+                        <Label fx:id="labelMaxSpeedXValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="sliderMaxSpeedX" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Min Speed Y" />
+                        <Slider fx:id="sliderMinSpeedY" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelMinSpeedYValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label layoutX="10.0" layoutY="10.0" text="Max Speed Y" GridPane.columnIndex="3" />
+                        <Label fx:id="labelMaxSpeedYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="sliderMaxSpeedY" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Label text="X">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label text="Y" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" focusTraversable="false" layoutX="10.0" layoutY="111.0" text="Dimension">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <content>
+            <GridPane>
+               <children>
+                  <Label text="X">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Y" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <GridPane GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Min X" />
+                        <Slider fx:id="sliderMinX" blockIncrement="1.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelMinXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label layoutX="10.0" layoutY="10.0" text="Max X" GridPane.columnIndex="3" />
+                        <Label fx:id="labelMaxXValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="sliderMaxX" blockIncrement="1.0" layoutX="10.0" layoutY="27.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Min Y" />
+                        <Slider fx:id="sliderMinY" blockIncrement="1.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelMinYValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Label layoutX="10.0" layoutY="10.0" text="Max Y" GridPane.columnIndex="3" />
+                        <Label fx:id="labelMaxYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="sliderMaxY" blockIncrement="1.0" layoutX="10.0" layoutY="27.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="15.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="65.0">
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" collapsible="false" focusTraversable="false" layoutX="10.0" layoutY="267.0" text="Diversity">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <content>
+            <GridPane>
                <children>
-                  <Label text="Min Speed Y" />
-                  <Slider fx:id="sliderMinSpeedY" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="labelMinSpeedYValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Max Speed Y" GridPane.columnIndex="3" />
-                  <Label fx:id="labelMaxSpeedYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-                  <Slider fx:id="sliderMaxSpeedY" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <Label text="X">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Y" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <GridPane GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Diversity X" />
+                        <Slider fx:id="sliderDiversityX" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelDiversityXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label layoutX="10.0" layoutY="10.0" text="Diversity Y" />
+                        <Label fx:id="labelDiversityYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="sliderDiversityY" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="15.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane layoutX="10.0" layoutY="65.0">
-               <children>
-                  <Label text="Min X" />
-                  <Slider fx:id="sliderMinX" blockIncrement="1.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="labelMinXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Max X" GridPane.columnIndex="3" />
-                  <Label fx:id="labelMaxXValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-                  <Slider fx:id="sliderMaxX" blockIncrement="1.0" layoutX="10.0" layoutY="27.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <GridPane layoutX="10.0" layoutY="120.0">
-               <children>
-                  <Label text="Min Y" />
-                  <Slider fx:id="sliderMinY" blockIncrement="1.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="labelMinYValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Max Y" GridPane.columnIndex="3" />
-                  <Label fx:id="labelMaxYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-                  <Slider fx:id="sliderMaxY" blockIncrement="1.0" layoutX="10.0" layoutY="27.0" majorTickUnit="100.0" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <GridPane layoutX="10.0" layoutY="175.0">
-               <children>
-                  <Label text="Diversity X" />
-                  <Slider fx:id="sliderDiversityX" blockIncrement="0.1" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="labelDiversityXValue" text="Value" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Diversity Y" GridPane.columnIndex="3" />
-                  <Label fx:id="labelDiversityYValue" layoutX="216.0" layoutY="10.0" text="Value" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-                  <Slider fx:id="sliderDiversityY" blockIncrement="0.1" layoutX="10.0" layoutY="27.0" majorTickUnit="0.1" max="0.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="50.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <StackPane>
-               <children>
-                  <Button fx:id="buttonReset" mnemonicParsing="false" onAction="#handleButtonResetAction" text="Reset" />
-               </children>
-            </StackPane>
+         </content>
+      </TitledPane>
+      <HBox alignment="BOTTOM_CENTER">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+         <children>
+            <Button fx:id="buttonReset" mnemonicParsing="false" onAction="#handleButtonResetAction" text="Reset" />
          </children>
-      </VBox>
-        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      </HBox>
+        <HBox alignment="BOTTOM_CENTER" spacing="10.0">
          <children>
             <Button id="buttonStart" fx:id="buttonStart" mnemonicParsing="false" onAction="#handleButtonStartAction" text="Start" />
             <Button id="buttonStop" fx:id="buttonStop" mnemonicParsing="false" onAction="#handleButtonStopAction" text="Stop" />
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
          </padding>
         </HBox>
-    </children>
+   </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
-</AnchorPane>
+</VBox>
