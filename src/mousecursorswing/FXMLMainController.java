@@ -4,26 +4,47 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class FXMLMainController implements Initializable {
     
     private MouseCursorSwingApp mouseCursorSwingApp;
     private MouseCursorSwingProperties mouseCursorSwingProperties;
     private MouseCursorSwingConstraints mouseCursorSwingConstraints;
+    private Timer mouseCursorShapePreviewTimer;
+    private TimerTask mouseCursorShapePreviewTimerTask;
     
     @FXML
+    private Tab tabCursor;
+    @FXML
     private VBox vBoxControls;
+    @FXML
+    private Button buttonPreview;
+    @FXML
+    private Button buttonResetSwing;
+    @FXML
+    private Button buttonResetCursor;
+    @FXML
+    private Button buttonStart;
+    @FXML
+    private Button buttonStop;
     @FXML
     private Label labelRefreshIntervalValue;
     @FXML
@@ -69,11 +90,41 @@ public class FXMLMainController implements Initializable {
     @FXML
     private Slider sliderDiversityY;
     @FXML
-    private Button buttonReset;
+    private Label labelCursorRadiusValue;
     @FXML
-    private Button buttonStart;
+    private Slider sliderCursorRadius;
     @FXML
-    private Button buttonStop;
+    private Label labelCursorGradientStopOffset0Value;
+    @FXML
+    private Slider sliderCursorGradientStopOffset0;
+    @FXML
+    private Label labelCursorGradientStopOffset1Value;
+    @FXML
+    private Slider sliderCursorGradientStopOffset1;
+    @FXML
+    private Label labelCursorGradientStopOffset2Value;
+    @FXML
+    private Slider sliderCursorGradientStopOffset2;
+    @FXML
+    private Label labelCursorGradientStopOffset3Value;
+    @FXML
+    private Slider sliderCursorGradientStopOffset3;
+    @FXML
+    private ColorPicker colorPickerCursorGradientStopColor0;
+    @FXML
+    private Label labelCursorGradientStopColor0Value;
+    @FXML
+    private ColorPicker colorPickerCursorGradientStopColor1;
+    @FXML
+    private Label labelCursorGradientStopColor1Value;
+    @FXML
+    private ColorPicker colorPickerCursorGradientStopColor2;
+    @FXML
+    private Label labelCursorGradientStopColor2Value;
+    @FXML
+    private ColorPicker colorPickerCursorGradientStopColor3;
+    @FXML
+    private Label labelCursorGradientStopColor3Value;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
@@ -84,6 +135,7 @@ public class FXMLMainController implements Initializable {
         this.mouseCursorSwingApp = app;
         this.mouseCursorSwingProperties = properties;
         this.mouseCursorSwingConstraints = constraints;
+        this.mouseCursorShapePreviewTimer = new Timer(true);
         
         //
         initializeValues();
@@ -188,6 +240,51 @@ public class FXMLMainController implements Initializable {
             }
         );
         
+        sliderCursorRadius.valueProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
+                    handleSliderCursorRadiusChange(newValue);
+                }
+            }
+        );
+        
+        sliderCursorGradientStopOffset0.valueProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
+                    handleSliderCursorGradientStopOffset0Change(newValue);
+                }
+            }
+        );
+        
+        sliderCursorGradientStopOffset1.valueProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
+                    handleSliderCursorGradientStopOffset1Change(newValue);
+                }
+            }
+        );
+        
+        sliderCursorGradientStopOffset2.valueProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
+                    handleSliderCursorGradientStopOffset2Change(newValue);
+                }
+            }
+        );
+        
+        sliderCursorGradientStopOffset3.valueProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
+                    handleSliderCursorGradientStopOffset3Change(newValue);
+                }
+            }
+        );
+        
     }
     
     private void initializeValues() {
@@ -247,9 +344,71 @@ public class FXMLMainController implements Initializable {
         sliderDiversityY.setValue(mouseCursorSwingProperties.getDiversityY());
         labelDiversityYValue.setText(String.format("%.1f", mouseCursorSwingProperties.getDiversityY()));
         
+        sliderCursorRadius.setMin(mouseCursorSwingConstraints.getCursorRadiusMin());
+        sliderCursorRadius.setMax(mouseCursorSwingConstraints.getCursorRadiusMax());
+        sliderCursorRadius.setValue(mouseCursorSwingProperties.getCursorRadius());
+        labelCursorRadiusValue.setText(String.valueOf(mouseCursorSwingProperties.getCursorRadius()));
+        
+        sliderCursorGradientStopOffset0.setMin(0);
+        sliderCursorGradientStopOffset0.setMax(mouseCursorSwingProperties.getCursorGradientStopOffset1());
+        sliderCursorGradientStopOffset0.setValue(mouseCursorSwingProperties.getCursorGradientStopOffset0());
+        labelCursorGradientStopOffset0Value.setText(String.valueOf(mouseCursorSwingProperties.getCursorGradientStopOffset0()));
+        
+        sliderCursorGradientStopOffset1.setMin(mouseCursorSwingProperties.getCursorGradientStopOffset0());
+        sliderCursorGradientStopOffset1.setMax(mouseCursorSwingProperties.getCursorGradientStopOffset2());
+        sliderCursorGradientStopOffset1.setValue(mouseCursorSwingProperties.getCursorGradientStopOffset1());
+        labelCursorGradientStopOffset1Value.setText(String.valueOf(mouseCursorSwingProperties.getCursorGradientStopOffset1()));
+        
+        sliderCursorGradientStopOffset2.setMin(mouseCursorSwingProperties.getCursorGradientStopOffset1());
+        sliderCursorGradientStopOffset2.setMax(mouseCursorSwingProperties.getCursorGradientStopOffset3());
+        sliderCursorGradientStopOffset2.setValue(mouseCursorSwingProperties.getCursorGradientStopOffset2());
+        labelCursorGradientStopOffset2Value.setText(String.valueOf(mouseCursorSwingProperties.getCursorGradientStopOffset2()));
+        
+        sliderCursorGradientStopOffset3.setMin(mouseCursorSwingProperties.getCursorGradientStopOffset2());
+        sliderCursorGradientStopOffset3.setMax(mouseCursorSwingProperties.getCursorRadius());
+        sliderCursorGradientStopOffset3.setValue(mouseCursorSwingProperties.getCursorGradientStopOffset3());
+        labelCursorGradientStopOffset3Value.setText(String.valueOf(mouseCursorSwingProperties.getCursorGradientStopOffset3()));
+        
+        colorPickerCursorGradientStopColor0.setValue(mouseCursorSwingProperties.getCursorGradientStopColor0());
+        colorPickerCursorGradientStopColor0.fireEvent(new ActionEvent());
+        labelCursorGradientStopColor0Value.setText(Utils.colorToHexString(mouseCursorSwingProperties.getCursorGradientStopColor0()));
+        
+        colorPickerCursorGradientStopColor1.setValue(mouseCursorSwingProperties.getCursorGradientStopColor1());
+        colorPickerCursorGradientStopColor1.fireEvent(new ActionEvent());
+        labelCursorGradientStopColor1Value.setText(Utils.colorToHexString(mouseCursorSwingProperties.getCursorGradientStopColor1()));
+        
+        colorPickerCursorGradientStopColor2.setValue(mouseCursorSwingProperties.getCursorGradientStopColor2());
+        colorPickerCursorGradientStopColor2.fireEvent(new ActionEvent());
+        labelCursorGradientStopColor2Value.setText(Utils.colorToHexString(mouseCursorSwingProperties.getCursorGradientStopColor2()));
+        
+        colorPickerCursorGradientStopColor3.setValue(mouseCursorSwingProperties.getCursorGradientStopColor3());
+        colorPickerCursorGradientStopColor3.fireEvent(new ActionEvent());
+        labelCursorGradientStopColor3Value.setText(Utils.colorToHexString(mouseCursorSwingProperties.getCursorGradientStopColor3()));
+        
     }
     
-    public void startMouseCursorSwingTask() {
+    private void updateMouseCursorSwingPreview() {
+        if (mouseCursorShapePreviewTimerTask != null) {
+            mouseCursorShapePreviewTimerTask.cancel();
+            mouseCursorShapePreviewTimerTask = null;
+        }
+        
+        mouseCursorShapePreviewTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        mouseCursorSwingApp.updateMouseCursorShapePreview();
+                    }
+                });
+            }
+        };
+        
+        mouseCursorShapePreviewTimer.schedule(mouseCursorShapePreviewTimerTask, 500);
+    }
+    
+    private void startMouseCursorSwingTask() {
         vBoxControls.setDisable(true);
         mouseCursorSwingApp.startMouseCursorSwingTask();
     }
@@ -267,15 +426,40 @@ public class FXMLMainController implements Initializable {
     }
     
     @FXML
-    private void handleButtonResetAction(ActionEvent event) {
+    private void handleTabCursorSelectionChanged(Event event) {
+        if (tabCursor.isSelected()) {
+            mouseCursorSwingApp.showMouseCursorShapePreview();
+        }
+        else {
+            mouseCursorSwingApp.hideMouseCursorShapePreview();
+        }
+    }
+    
+    @FXML
+    private void handleButtonPreviewAction(ActionEvent event) {
+        mouseCursorSwingApp.showMouseCursorShapePreview();
+    }
+    
+    @FXML
+    private void handleButtonResetSwingAction(ActionEvent event) {
         boolean isDisabled = vBoxControls.isDisabled();
         
         vBoxControls.setDisable(true);
-        mouseCursorSwingProperties.resetToDefaults();
+        mouseCursorSwingProperties.resetToDefaultsSwing();
         initializeValues();
         vBoxControls.setDisable(isDisabled);
     }
-    
+
+    @FXML
+    private void handleButtonResetCursorAction(ActionEvent event) {
+        boolean isDisabled = vBoxControls.isDisabled();
+        
+        vBoxControls.setDisable(true);
+        mouseCursorSwingProperties.resetToDefaultsCursor();
+        initializeValues();
+        vBoxControls.setDisable(isDisabled);
+    }
+
     @FXML
     private void handleButtonStartAction(ActionEvent event) {
         startMouseCursorSwingTask();
@@ -358,6 +542,79 @@ public class FXMLMainController implements Initializable {
         double diversityY = value.doubleValue();
         mouseCursorSwingProperties.setDiversityY(new BigDecimal(diversityY).setScale(1, RoundingMode.HALF_UP).doubleValue());
         labelDiversityYValue.setText(String.format("%.1f", diversityY));
+    }
+    
+    private void handleSliderCursorRadiusChange(Number value) {
+        int cursorRadius = value.intValue();
+        mouseCursorSwingProperties.setCursorRadius(cursorRadius);
+        labelCursorRadiusValue.setText(String.valueOf(cursorRadius));
+        updateMouseCursorSwingPreview();
+    }
+    
+    private void handleSliderCursorGradientStopOffset0Change(Number value) {
+        int cursorGradientStopOffset0 = value.intValue();
+        sliderCursorGradientStopOffset1.setMin(cursorGradientStopOffset0);
+        mouseCursorSwingProperties.setCursorGradientStopOffset0(cursorGradientStopOffset0);
+        labelCursorGradientStopOffset0Value.setText(String.valueOf(cursorGradientStopOffset0));
+        updateMouseCursorSwingPreview();
+    }
+    
+    private void handleSliderCursorGradientStopOffset1Change(Number value) {
+        int cursorGradientStopOffset1 = value.intValue();
+        sliderCursorGradientStopOffset0.setMax(cursorGradientStopOffset1);
+        sliderCursorGradientStopOffset2.setMin(cursorGradientStopOffset1);
+        mouseCursorSwingProperties.setCursorGradientStopOffset1(cursorGradientStopOffset1);
+        labelCursorGradientStopOffset1Value.setText(String.valueOf(cursorGradientStopOffset1));
+        updateMouseCursorSwingPreview();
+    }
+    
+    private void handleSliderCursorGradientStopOffset2Change(Number value) {
+        int cursorGradientStopOffset2 = value.intValue();
+        sliderCursorGradientStopOffset1.setMax(cursorGradientStopOffset2);
+        sliderCursorGradientStopOffset3.setMin(cursorGradientStopOffset2);
+        mouseCursorSwingProperties.setCursorGradientStopOffset2(cursorGradientStopOffset2);
+        labelCursorGradientStopOffset2Value.setText(String.valueOf(cursorGradientStopOffset2));
+        updateMouseCursorSwingPreview();
+    }
+    
+    private void handleSliderCursorGradientStopOffset3Change(Number value) {
+        int cursorGradientStopOffset3 = value.intValue();
+        sliderCursorGradientStopOffset2.setMax(cursorGradientStopOffset3);
+        mouseCursorSwingProperties.setCursorGradientStopOffset3(cursorGradientStopOffset3);
+        labelCursorGradientStopOffset3Value.setText(String.valueOf(cursorGradientStopOffset3));
+        updateMouseCursorSwingPreview();
+    }
+    
+    @FXML
+    private void handleColorPickerCursorGradientStopColor0Action(ActionEvent event) {
+        Color color = colorPickerCursorGradientStopColor0.getValue();
+        mouseCursorSwingProperties.setCursorGradientStopColor0(color);
+        labelCursorGradientStopColor0Value.setText(Utils.colorToHexString(color));
+        updateMouseCursorSwingPreview();
+    }
+    
+    @FXML
+    private void handleColorPickerCursorGradientStopColor1Action(ActionEvent event) {
+        Color color = colorPickerCursorGradientStopColor1.getValue();
+        mouseCursorSwingProperties.setCursorGradientStopColor1(color);
+        labelCursorGradientStopColor1Value.setText(Utils.colorToHexString(color));
+        updateMouseCursorSwingPreview();
+    }
+    
+    @FXML
+    private void handleColorPickerCursorGradientStopColor2Action(ActionEvent event) {
+        Color color = colorPickerCursorGradientStopColor2.getValue();
+        mouseCursorSwingProperties.setCursorGradientStopColor2(color);
+        labelCursorGradientStopColor2Value.setText(Utils.colorToHexString(color));
+        updateMouseCursorSwingPreview();
+    }
+    
+    @FXML
+    private void handleColorPickerCursorGradientStopColor3Action(ActionEvent event) {
+        Color color = colorPickerCursorGradientStopColor3.getValue();
+        mouseCursorSwingProperties.setCursorGradientStopColor3(color);
+        labelCursorGradientStopColor3Value.setText(Utils.colorToHexString(color));
+        updateMouseCursorSwingPreview();
     }
     
 }

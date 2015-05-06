@@ -17,6 +17,8 @@ public class MouseCursorSwingConstraints extends Properties {
     private static final String KEY_SPEED_MAX = "KEY_SPEED_MAX";
     private static final String KEY_DIVERSITY_MIN = "KEY_DIVERSITY_MIN";
     private static final String KEY_DIVERSITY_MAX = "KEY_DIVERSITY_MAX";
+    private static final String KEY_CURSOR_RADIUS_MIN = "KEY_CURSOR_RADIUS_MIN";
+    private static final String KEY_CURSOR_RADIUS_MAX = "KEY_CURSOR_RADIUS_MAX";
     
     public MouseCursorSwingConstraints() {
 
@@ -37,6 +39,8 @@ public class MouseCursorSwingConstraints extends Properties {
         defaultProperties.setProperty(KEY_SPEED_MAX, String.valueOf(5.0d));
         defaultProperties.setProperty(KEY_DIVERSITY_MIN, String.valueOf(2.0d));
         defaultProperties.setProperty(KEY_DIVERSITY_MAX, String.valueOf(10.0d));
+        defaultProperties.setProperty(KEY_CURSOR_RADIUS_MIN, String.valueOf(1));
+        defaultProperties.setProperty(KEY_CURSOR_RADIUS_MAX, String.valueOf(200));
         
         //store();
         
@@ -111,4 +115,12 @@ public class MouseCursorSwingConstraints extends Properties {
         return Double.parseDouble(getProperty(KEY_DIVERSITY_MAX));
     }
     
+    public int getCursorRadiusMin() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_RADIUS_MIN));
+    }
+
+    public int getCursorRadiusMax() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_RADIUS_MAX));
+    }
+
 }

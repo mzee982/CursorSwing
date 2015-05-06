@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
 public class MouseCursorSwingProperties extends Properties {
@@ -25,6 +26,41 @@ public class MouseCursorSwingProperties extends Properties {
     private static final String KEY_MAX_Y = "KEY_MAX_Y";
     private static final String KEY_DIVERSITY_X = "KEY_DIVERSITY_X";
     private static final String KEY_DIVERSITY_Y = "KEY_DIVERSITY_Y";
+    private static final String KEY_CURSOR_RADIUS = "KEY_CURSOR_RADIUS";
+    private static final String KEY_CURSOR_GRADIENT_STOP_OFFSET_0 = "KEY_CURSOR_GRADIENT_STOP_OFFSET_0";
+    private static final String KEY_CURSOR_GRADIENT_STOP_OFFSET_1 = "KEY_CURSOR_GRADIENT_STOP_OFFSET_1";
+    private static final String KEY_CURSOR_GRADIENT_STOP_OFFSET_2 = "KEY_CURSOR_GRADIENT_STOP_OFFSET_2";
+    private static final String KEY_CURSOR_GRADIENT_STOP_OFFSET_3 = "KEY_CURSOR_GRADIENT_STOP_OFFSET_3";
+    private static final String KEY_CURSOR_GRADIENT_STOP_COLOR_0 = "KEY_CURSOR_GRADIENT_STOP_COLOR_0";
+    private static final String KEY_CURSOR_GRADIENT_STOP_COLOR_1 = "KEY_CURSOR_GRADIENT_STOP_COLOR_1";
+    private static final String KEY_CURSOR_GRADIENT_STOP_COLOR_2 = "KEY_CURSOR_GRADIENT_STOP_COLOR_2";
+    private static final String KEY_CURSOR_GRADIENT_STOP_COLOR_3 = "KEY_CURSOR_GRADIENT_STOP_COLOR_3";
+    
+    private enum SwingKeys {
+        KEY_REFRESH_INTERVAL, 
+        KEY_MIN_SPEED_X, 
+        KEY_MAX_SPEED_X, 
+        KEY_MIN_SPEED_Y, 
+        KEY_MAX_SPEED_Y, 
+        KEY_MIN_X, 
+        KEY_MIN_Y, 
+        KEY_MAX_X, 
+        KEY_MAX_Y, 
+        KEY_DIVERSITY_X, 
+        KEY_DIVERSITY_Y
+    };
+    
+    private enum CursorKeys {
+        KEY_CURSOR_RADIUS, 
+        KEY_CURSOR_GRADIENT_STOP_OFFSET_0, 
+        KEY_CURSOR_GRADIENT_STOP_OFFSET_1, 
+        KEY_CURSOR_GRADIENT_STOP_OFFSET_2, 
+        KEY_CURSOR_GRADIENT_STOP_OFFSET_3, 
+        KEY_CURSOR_GRADIENT_STOP_COLOR_0, 
+        KEY_CURSOR_GRADIENT_STOP_COLOR_1, 
+        KEY_CURSOR_GRADIENT_STOP_COLOR_2, 
+        KEY_CURSOR_GRADIENT_STOP_COLOR_3
+    };
     
     private final int screenWidth;
     private final int screenHeight;
@@ -139,9 +175,20 @@ public class MouseCursorSwingProperties extends Properties {
         if (maxY > screenHeight) properties.setProperty(KEY_MAX_Y, String.valueOf(screenHeight));
     }
     
-    public void resetToDefaults() {
-        clear();
-        putAll(defaults);
+    public void resetToDefaultsSwing() {
+        for (SwingKeys keyConstant : SwingKeys.values()) {
+            String keyString = keyConstant.name();
+            String defaultValue = defaults.getProperty(keyString);
+            setProperty(keyString, defaultValue);
+        }
+    }
+    
+    public void resetToDefaultsCursor() {
+        for (CursorKeys keyConstant : CursorKeys.values()) {
+            String keyString = keyConstant.name();
+            String defaultValue = defaults.getProperty(keyString);
+            setProperty(keyString, defaultValue);
+        }
     }
     
     public int getScreenWidth() {
@@ -240,4 +287,76 @@ public class MouseCursorSwingProperties extends Properties {
         setProperty(KEY_DIVERSITY_Y, String.valueOf(diversityY));
     }
 
+    public int getCursorRadius() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_RADIUS));
+    }
+
+    public void setCursorRadius(int cursorRadius) {
+        setProperty(KEY_CURSOR_RADIUS, String.valueOf(cursorRadius));
+    }
+    
+    public int getCursorGradientStopOffset0() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_0));
+    }
+
+    public void setCursorGradientStopOffset0(int cursorGradientStopOffset) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_0, String.valueOf(cursorGradientStopOffset));
+    }
+    
+    public int getCursorGradientStopOffset1() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_1));
+    }
+
+    public void setCursorGradientStopOffset1(int cursorGradientStopOffset) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_1, String.valueOf(cursorGradientStopOffset));
+    }
+    
+    public int getCursorGradientStopOffset2() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_2));
+    }
+
+    public void setCursorGradientStopOffset2(int cursorGradientStopOffset) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_2, String.valueOf(cursorGradientStopOffset));
+    }
+    
+    public int getCursorGradientStopOffset3() {
+        return Integer.parseInt(getProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_3));
+    }
+
+    public void setCursorGradientStopOffset3(int cursorGradientStopOffset) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_OFFSET_3, String.valueOf(cursorGradientStopOffset));
+    }
+    
+    public Color getCursorGradientStopColor0() {
+        return Color.web(getProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_0));
+    }
+
+    public void setCursorGradientStopColor0(Color cursorGradientStopColor) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_0, Utils.colorToHexString(cursorGradientStopColor));
+    }
+    
+    public Color getCursorGradientStopColor1() {
+        return Color.web(getProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_1));
+    }
+
+    public void setCursorGradientStopColor1(Color cursorGradientStopColor) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_1, Utils.colorToHexString(cursorGradientStopColor));
+    }
+    
+    public Color getCursorGradientStopColor2() {
+        return Color.web(getProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_2));
+    }
+
+    public void setCursorGradientStopColor2(Color cursorGradientStopColor) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_2, Utils.colorToHexString(cursorGradientStopColor));
+    }
+    
+    public Color getCursorGradientStopColor3() {
+        return Color.web(getProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_3));
+    }
+
+    public void setCursorGradientStopColor3(Color cursorGradientStopColor) {
+        setProperty(KEY_CURSOR_GRADIENT_STOP_COLOR_3, Utils.colorToHexString(cursorGradientStopColor));
+    }
+    
 }

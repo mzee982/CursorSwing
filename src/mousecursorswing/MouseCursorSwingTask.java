@@ -14,10 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,7 +23,7 @@ public class MouseCursorSwingTask extends Task<Void> {
     private final MouseCursorSwingProperties properties;
     private Random random;
     private Stage stage;
-    private Circle circle;
+    private MouseCursorShape cursorShape;
     private AnimationLock animationLock;
     
     private class AnimationLock {
@@ -81,13 +77,9 @@ public class MouseCursorSwingTask extends Task<Void> {
     
     private void createStage(Stage ownerStage) {
         Group root = new Group();
-        RadialGradient gradient = new RadialGradient(0, 0, 0.5d, 0.5d, 0.5d, true, CycleMethod.NO_CYCLE, 
-                                    new Stop(0, Color.TRANSPARENT), 
-                                    new Stop(0.05, Color.TRANSPARENT), 
-                                    new Stop(0.06, Color.rgb(0,0,0,0.5)), 
-                                    new Stop(1, Color.TRANSPARENT));
-        circle = new Circle(0, 0, 200, gradient);
-        root.getChildren().add(circle);
+        cursorShape = new MouseCursorShape(properties, false);
+        cursorShape.setVisible(false);
+        root.getChildren().add(cursorShape);
         
         Scene scene = new Scene(root, Color.TRANSPARENT);
         
@@ -96,7 +88,7 @@ public class MouseCursorSwingTask extends Task<Void> {
         stage.setTitle(Constants.APP_TITLE);
         stage.setResizable(false);
         stage.setFullScreen(true);
-        stage.initModality(Modality.NONE); //Modality.WINDOW_MODAL
+        stage.initModality(Modality.NONE);
         stage.initOwner(ownerStage);
         
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -142,8 +134,9 @@ public class MouseCursorSwingTask extends Task<Void> {
         boolean needToAnimateY = (ya != yb);
 
         // Initialize position
-        circle.setTranslateX(xa);
-        circle.setTranslateY(ya);
+        cursorShape.setTranslateX(xa);
+        cursorShape.setTranslateY(ya);
+        cursorShape.setVisible(true);
         
         // Animation
         TranslateTransition transitionX = null;
@@ -156,7 +149,7 @@ public class MouseCursorSwingTask extends Task<Void> {
                 
                 // Animate X
                 if (!animationLock.animateX && needToAnimateX) {
-                    transitionX = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * xn), circle);
+                    transitionX = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * xn), cursorShape);
                     transitionX.setFromX(xa);
                     transitionX.setToX(xb);
                     transitionX.setCycleCount(1);
@@ -176,7 +169,7 @@ public class MouseCursorSwingTask extends Task<Void> {
                 
                 // Animate Y
                 if (!animationLock.animateY && needToAnimateY) {
-                    transitionY = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * yn), circle);
+                    transitionY = new TranslateTransition(Duration.millis(properties.getRefreshInterval() * yn), cursorShape);
                     transitionY.setFromY(ya);
                     transitionY.setToY(yb);
                     transitionY.setCycleCount(1);

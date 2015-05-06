@@ -15,6 +15,7 @@ public class MouseCursorSwingApp extends Application {
     private MouseCursorSwingTask mouseCursorSwingTask;
     private MouseCursorSwingProperties mouseCursorSwingProperties;
     private MouseCursorSwingConstraints mouseCursorSwingConstraints;
+    private MouseCursorShapePreview mouseCursorShapePreview;
     
     @Override
     public void init() throws Exception {
@@ -97,6 +98,30 @@ public class MouseCursorSwingApp extends Application {
             
             controller.stopMouseCursorSwingTask();
             
+        }
+    }
+    
+    public void showMouseCursorShapePreview() {
+        if (mouseCursorShapePreview == null) {
+            mouseCursorShapePreview = new MouseCursorShapePreview(topLevelStage, mouseCursorSwingProperties);
+        }
+        else {
+            mouseCursorShapePreview.update(mouseCursorSwingProperties);
+        }
+        
+        mouseCursorShapePreview.show();
+        topLevelStage.toFront();
+    }
+    
+    public void updateMouseCursorShapePreview() {
+        if ((mouseCursorShapePreview != null) && (mouseCursorShapePreview.isShowing())) {
+            mouseCursorShapePreview.update(mouseCursorSwingProperties);
+        }
+    }
+    
+    public void hideMouseCursorShapePreview() {
+        if ((mouseCursorShapePreview != null) && (mouseCursorShapePreview.isShowing())) {
+            mouseCursorShapePreview.hide();
         }
     }
 
