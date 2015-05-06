@@ -145,7 +145,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderRefreshIntervalChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderRefreshIntervalChange(newValue);
                 }
             }
         );
@@ -154,7 +154,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMinSpeedXChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMinSpeedXChange(newValue);
                 }
             }
         );
@@ -163,7 +163,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMaxSpeedXChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMaxSpeedXChange(newValue);
                 }
             }
         );
@@ -172,7 +172,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMinSpeedYChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMinSpeedYChange(newValue);
                 }
             }
         );
@@ -181,7 +181,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMaxSpeedYChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMaxSpeedYChange(newValue);
                 }
             }
         );
@@ -190,7 +190,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMinXChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMinXChange(newValue);
                 }
             }
         );
@@ -199,7 +199,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMaxXChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMaxXChange(newValue);
                 }
             }
         );
@@ -208,7 +208,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMinYChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMinYChange(newValue);
                 }
             }
         );
@@ -217,7 +217,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderMaxYChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderMaxYChange(newValue);
                 }
             }
         );
@@ -226,7 +226,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleDiversityXChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleDiversityXChange(newValue);
                 }
             }
         );
@@ -235,7 +235,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleDiversityYChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleDiversityYChange(newValue);
                 }
             }
         );
@@ -244,7 +244,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderCursorRadiusChange(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderCursorRadiusChange(newValue);
                 }
             }
         );
@@ -253,7 +253,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderCursorGradientStopOffset0Change(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderCursorGradientStopOffset0Change(newValue);
                 }
             }
         );
@@ -262,7 +262,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderCursorGradientStopOffset1Change(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderCursorGradientStopOffset1Change(newValue);
                 }
             }
         );
@@ -271,7 +271,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderCursorGradientStopOffset2Change(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderCursorGradientStopOffset2Change(newValue);
                 }
             }
         );
@@ -280,7 +280,7 @@ public class FXMLMainController implements Initializable {
             new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> obsValue, Number oldValue, Number newValue) {
-                    handleSliderCursorGradientStopOffset3Change(newValue);
+                    if (!vBoxControls.isDisabled()) handleSliderCursorGradientStopOffset3Change(newValue);
                 }
             }
         );
@@ -477,71 +477,71 @@ public class FXMLMainController implements Initializable {
     }
     
     private void handleSliderMinSpeedXChange(Number value) {
-        double minSpeedX = value.doubleValue();
-        sliderMaxSpeedX.setMin(minSpeedX);
-        mouseCursorSwingProperties.setMinSpeedX(new BigDecimal(minSpeedX).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelMinSpeedXValue.setText(String.format("%.1f", minSpeedX));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        sliderMaxSpeedX.setMin(doubleValue);
+        mouseCursorSwingProperties.setMinSpeedX(doubleValue);
+        labelMinSpeedXValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleSliderMaxSpeedXChange(Number value) {
-        double maxSpeedX = value.doubleValue();
-        sliderMinSpeedX.setMax(maxSpeedX);
-        mouseCursorSwingProperties.setMaxSpeedX(new BigDecimal(maxSpeedX).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelMaxSpeedXValue.setText(String.format("%.1f", maxSpeedX));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        sliderMinSpeedX.setMax(doubleValue);
+        mouseCursorSwingProperties.setMaxSpeedX(doubleValue);
+        labelMaxSpeedXValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleSliderMinSpeedYChange(Number value) {
-        double minSpeedY = value.doubleValue();
-        sliderMaxSpeedY.setMin(minSpeedY);
-        mouseCursorSwingProperties.setMinSpeedY(new BigDecimal(minSpeedY).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelMinSpeedYValue.setText(String.format("%.1f", minSpeedY));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        sliderMaxSpeedY.setMin(doubleValue);
+        mouseCursorSwingProperties.setMinSpeedY(doubleValue);
+        labelMinSpeedYValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleSliderMaxSpeedYChange(Number value) {
-        double maxSpeedY = value.doubleValue();
-        sliderMinSpeedY.setMax(maxSpeedY);
-        mouseCursorSwingProperties.setMaxSpeedY(new BigDecimal(maxSpeedY).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelMaxSpeedYValue.setText(String.format("%.1f", maxSpeedY));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        sliderMinSpeedY.setMax(doubleValue);
+        mouseCursorSwingProperties.setMaxSpeedY(doubleValue);
+        labelMaxSpeedYValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleSliderMinXChange(Number value) {
-        int minX = value.intValue();
-        sliderMaxX.setMin(minX);
-        mouseCursorSwingProperties.setMinX(minX);
-        labelMinXValue.setText(String.valueOf(minX));
+        int intValue = value.intValue();
+        sliderMaxX.setMin(intValue);
+        mouseCursorSwingProperties.setMinX(intValue);
+        labelMinXValue.setText(String.valueOf(intValue));
     }
     
     private void handleSliderMaxXChange(Number value) {
-        int maxX = value.intValue();
-        sliderMinX.setMax(maxX);
-        mouseCursorSwingProperties.setMaxX(maxX);
-        labelMaxXValue.setText(String.valueOf(maxX));
+        int intValue = value.intValue();
+        sliderMinX.setMax(intValue);
+        mouseCursorSwingProperties.setMaxX(intValue);
+        labelMaxXValue.setText(String.valueOf(intValue));
     }
     
     private void handleSliderMinYChange(Number value) {
-        int minY = value.intValue();
-        sliderMaxY.setMin(minY);
-        mouseCursorSwingProperties.setMinY(minY);
-        labelMinYValue.setText(String.valueOf(minY));
+        int intValue = value.intValue();
+        sliderMaxY.setMin(intValue);
+        mouseCursorSwingProperties.setMinY(intValue);
+        labelMinYValue.setText(String.valueOf(intValue));
     }
     
     private void handleSliderMaxYChange(Number value) {
-        int maxY = value.intValue();
-        sliderMinY.setMax(maxY);
-        mouseCursorSwingProperties.setMaxY(maxY);
-        labelMaxYValue.setText(String.valueOf(maxY));
+        int intValue = value.intValue();
+        sliderMinY.setMax(intValue);
+        mouseCursorSwingProperties.setMaxY(intValue);
+        labelMaxYValue.setText(String.valueOf(intValue));
     }
     
     private void handleDiversityXChange(Number value) {
-        double diversityX = value.doubleValue();
-        mouseCursorSwingProperties.setDiversityX(new BigDecimal(diversityX).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelDiversityXValue.setText(String.format("%.1f", diversityX));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        mouseCursorSwingProperties.setDiversityX(doubleValue);
+        labelDiversityXValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleDiversityYChange(Number value) {
-        double diversityY = value.doubleValue();
-        mouseCursorSwingProperties.setDiversityY(new BigDecimal(diversityY).setScale(1, RoundingMode.HALF_UP).doubleValue());
-        labelDiversityYValue.setText(String.format("%.1f", diversityY));
+        double doubleValue = new BigDecimal(value.doubleValue()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        mouseCursorSwingProperties.setDiversityY(doubleValue);
+        labelDiversityYValue.setText(String.valueOf(doubleValue));
     }
     
     private void handleSliderCursorRadiusChange(Number value) {
