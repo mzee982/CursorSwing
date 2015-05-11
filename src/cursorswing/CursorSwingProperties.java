@@ -12,8 +12,8 @@ import javafx.stage.Screen;
 
 public class CursorSwingProperties extends Properties {
     
-    private static final String PROPERTIES_FILE_NAME = "MouseCursorSwing.properties";
-    private static final String DEFAULT_PROPERTIES_FILE_NAME = "MouseCursorSwing-defaults.properties";
+    private static final String PROPERTIES_FILE_NAME = "CursorSwing.properties";
+    private static final String DEFAULT_PROPERTIES_FILE_NAME = "CursorSwing-defaults.properties";
     
     private static final String KEY_REFRESH_INTERVAL = "KEY_REFRESH_INTERVAL";
     private static final String KEY_MIN_SPEED_X = "KEY_MIN_SPEED_X";

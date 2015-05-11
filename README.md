@@ -1,1 +1,1 @@
-MouseCursorSwing
+CursorSwing

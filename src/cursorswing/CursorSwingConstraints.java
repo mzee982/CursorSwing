@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class CursorSwingConstraints extends Properties {
     
-    private static final String CONSTRAINTS_FILE_NAME = "MouseCursorSwing-constraints.properties";
+    private static final String CONSTRAINTS_FILE_NAME = "CursorSwing-constraints.properties";
     
     private static final String KEY_REFRESH_INTERVAL_MIN = "KEY_REFRESH_INTERVAL_MIN";
     private static final String KEY_REFRESH_INTERVAL_MAX = "KEY_REFRESH_INTERVAL_MAX";
