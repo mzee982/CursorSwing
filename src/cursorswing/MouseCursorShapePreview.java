@@ -1,4 +1,4 @@
-package mousecursorswing;
+package cursorswing;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;

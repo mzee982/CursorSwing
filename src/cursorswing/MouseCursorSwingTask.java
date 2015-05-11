@@ -1,4 +1,4 @@
-package mousecursorswing;
+package cursorswing;
 
 import java.util.Date;
 import java.util.Random;

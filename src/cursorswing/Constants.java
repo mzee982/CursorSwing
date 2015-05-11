@@ -1,4 +1,4 @@
-package mousecursorswing;
+package cursorswing;
 
 public class Constants {
     
