@@ -12,13 +12,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-public class MouseCursorShapePreview extends Stage {
+public class CursorShapePreview extends Stage {
     
-    public MouseCursorShapePreview(Stage ownerStage, MouseCursorSwingProperties properties) {
+    public CursorShapePreview(Stage ownerStage, CursorSwingProperties properties) {
         super(StageStyle.UTILITY);
         
         Group root = new Group();
-        MouseCursorShape cursorShape = new MouseCursorShape(properties, true);
+        CursorShape cursorShape = new CursorShape(properties, true);
         root.getChildren().add(cursorShape);
         
         Scene scene = new Scene(root, Color.WHITE);
@@ -47,10 +47,10 @@ public class MouseCursorShapePreview extends Stage {
         });
     }
     
-    public void update(MouseCursorSwingProperties properties) {
+    public void update(CursorSwingProperties properties) {
         Group root = ((Group) getScene().getRoot());
         root.getChildren().clear();
-        MouseCursorShape cursorShape = new MouseCursorShape(properties, true);
+        CursorShape cursorShape = new CursorShape(properties, true);
         root.getChildren().add(cursorShape);
         
         sizeToScene();

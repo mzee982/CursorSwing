@@ -19,11 +19,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class MouseCursorSwingTask extends Task<Void> {
-    private final MouseCursorSwingProperties properties;
+public class CursorSwingTask extends Task<Void> {
+    private final CursorSwingProperties properties;
     private Random random;
     private Stage stage;
-    private MouseCursorShape cursorShape;
+    private CursorShape cursorShape;
     private AnimationLock animationLock;
     
     private class AnimationLock {
@@ -36,7 +36,7 @@ public class MouseCursorSwingTask extends Task<Void> {
         }
     }
     
-    public MouseCursorSwingTask(MouseCursorSwingProperties properties, Stage ownerStage) {
+    public CursorSwingTask(CursorSwingProperties properties, Stage ownerStage) {
         
         //
         this.properties = properties;
@@ -77,7 +77,7 @@ public class MouseCursorSwingTask extends Task<Void> {
     
     private void createStage(Stage ownerStage) {
         Group root = new Group();
-        cursorShape = new MouseCursorShape(properties, false);
+        cursorShape = new CursorShape(properties, false);
         cursorShape.setVisible(false);
         root.getChildren().add(cursorShape);
         

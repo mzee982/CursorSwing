@@ -8,22 +8,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MouseCursorSwingApp extends Application {
+public class CursorSwingApp extends Application {
 
     private Stage topLevelStage;
     private FXMLMainController controller;
-    private MouseCursorSwingTask mouseCursorSwingTask;
-    private MouseCursorSwingProperties mouseCursorSwingProperties;
-    private MouseCursorSwingConstraints mouseCursorSwingConstraints;
-    private MouseCursorShapePreview mouseCursorShapePreview;
+    private CursorSwingTask mouseCursorSwingTask;
+    private CursorSwingProperties mouseCursorSwingProperties;
+    private CursorSwingConstraints mouseCursorSwingConstraints;
+    private CursorShapePreview mouseCursorShapePreview;
     
     @Override
     public void init() throws Exception {
         super.init();
         
         mouseCursorSwingTask = null;
-        mouseCursorSwingProperties = new MouseCursorSwingProperties();
-        mouseCursorSwingConstraints = new MouseCursorSwingConstraints();
+        mouseCursorSwingProperties = new CursorSwingProperties();
+        mouseCursorSwingConstraints = new CursorSwingConstraints();
     }
     
     @Override
@@ -64,7 +64,7 @@ public class MouseCursorSwingApp extends Application {
 
         //
         if (mouseCursorSwingTask == null) {
-            mouseCursorSwingTask = new MouseCursorSwingTask(mouseCursorSwingProperties, topLevelStage);
+            mouseCursorSwingTask = new CursorSwingTask(mouseCursorSwingProperties, topLevelStage);
             
             mouseCursorSwingTask.addEventHandler(WorkerStateEvent.ANY, new EventHandler<WorkerStateEvent>() {
                 @Override
@@ -103,7 +103,7 @@ public class MouseCursorSwingApp extends Application {
     
     public void showMouseCursorShapePreview() {
         if (mouseCursorShapePreview == null) {
-            mouseCursorShapePreview = new MouseCursorShapePreview(topLevelStage, mouseCursorSwingProperties);
+            mouseCursorShapePreview = new CursorShapePreview(topLevelStage, mouseCursorSwingProperties);
         }
         else {
             mouseCursorShapePreview.update(mouseCursorSwingProperties);

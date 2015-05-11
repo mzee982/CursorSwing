@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class MouseCursorSwingConstraints extends Properties {
+public class CursorSwingConstraints extends Properties {
     
     private static final String CONSTRAINTS_FILE_NAME = "MouseCursorSwing-constraints.properties";
     
@@ -20,7 +20,7 @@ public class MouseCursorSwingConstraints extends Properties {
     private static final String KEY_CURSOR_RADIUS_MIN = "KEY_CURSOR_RADIUS_MIN";
     private static final String KEY_CURSOR_RADIUS_MAX = "KEY_CURSOR_RADIUS_MAX";
     
-    public MouseCursorSwingConstraints() {
+    public CursorSwingConstraints() {
 
         //
         defaults = getDefaults();

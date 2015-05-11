@@ -25,9 +25,9 @@ import javafx.scene.paint.Color;
 
 public class FXMLMainController implements Initializable {
     
-    private MouseCursorSwingApp mouseCursorSwingApp;
-    private MouseCursorSwingProperties mouseCursorSwingProperties;
-    private MouseCursorSwingConstraints mouseCursorSwingConstraints;
+    private CursorSwingApp mouseCursorSwingApp;
+    private CursorSwingProperties mouseCursorSwingProperties;
+    private CursorSwingConstraints mouseCursorSwingConstraints;
     private Timer mouseCursorShapePreviewTimer;
     private TimerTask mouseCursorShapePreviewTimerTask;
     
@@ -129,7 +129,7 @@ public class FXMLMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
     
-    public void initializeView(MouseCursorSwingApp app, MouseCursorSwingProperties properties, MouseCursorSwingConstraints constraints) {
+    public void initializeView(CursorSwingApp app, CursorSwingProperties properties, CursorSwingConstraints constraints) {
 
         //
         this.mouseCursorSwingApp = app;

@@ -10,7 +10,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
-public class MouseCursorSwingProperties extends Properties {
+public class CursorSwingProperties extends Properties {
     
     private static final String PROPERTIES_FILE_NAME = "MouseCursorSwing.properties";
     private static final String DEFAULT_PROPERTIES_FILE_NAME = "MouseCursorSwing-defaults.properties";
@@ -65,7 +65,7 @@ public class MouseCursorSwingProperties extends Properties {
     private final int screenWidth;
     private final int screenHeight;
     
-    public MouseCursorSwingProperties() {
+    public CursorSwingProperties() {
 
         // Screen dimensions
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getBounds();

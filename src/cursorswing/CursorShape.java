@@ -5,9 +5,9 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 
-public class MouseCursorShape extends Circle {
+public class CursorShape extends Circle {
     
-    public MouseCursorShape(MouseCursorSwingProperties properties, boolean aligned) {
+    public CursorShape(CursorSwingProperties properties, boolean aligned) {
         super(properties.getCursorRadius());
         
         if (aligned) {
