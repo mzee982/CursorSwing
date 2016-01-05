@@ -50,4 +50,10 @@
     nbproject/build-impl.xml and nbproject/jfx-impl.xml.
 
     -->
+    <target name="-post-jfx-jar">
+        <echo message="Copy property files to dist"/>
+        <copy todir="${dist.dir}">
+            <fileset dir="${basedir}" includes="*.properties"/>
+        </copy>
+    </target>
 </project>
